@@ -15,6 +15,7 @@ libraryDependencies ++= Seq(
   "com.google.protobuf" % "protobuf-java" % "3.1.0",
   "com.google.guava" % "guava" % "20.0",
   "io.netty" % "netty-all" % "4.1.6.Final",
-  "com.google.census" % "census-api" % "0.2.0"
+  "com.google.census" % "census-api" % "0.2.0",
+  "io.netty" % "netty-tcnative-boringssl-static" % "1.1.33.Fork23"
 )
     
