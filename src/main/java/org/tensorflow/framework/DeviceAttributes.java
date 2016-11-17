@@ -18,6 +18,7 @@ public  final class DeviceAttributes extends
     name_ = "";
     deviceType_ = "";
     memoryLimit_ = 0L;
+    busAdjacency_ = 0;
     incarnation_ = 0L;
     physicalDeviceDesc_ = "";
   }
@@ -64,17 +65,10 @@ public  final class DeviceAttributes extends
             memoryLimit_ = input.readInt64();
             break;
           }
-          case 42: {
-            org.tensorflow.framework.DeviceLocality.Builder subBuilder = null;
-            if (locality_ != null) {
-              subBuilder = locality_.toBuilder();
-            }
-            locality_ = input.readMessage(org.tensorflow.framework.DeviceLocality.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(locality_);
-              locality_ = subBuilder.buildPartial();
-            }
+          case 40: {
+            int rawValue = input.readEnum();
 
+            busAdjacency_ = rawValue;
             break;
           }
           case 49: {
@@ -208,40 +202,20 @@ public  final class DeviceAttributes extends
     return memoryLimit_;
   }
 
-  public static final int LOCALITY_FIELD_NUMBER = 5;
-  private org.tensorflow.framework.DeviceLocality locality_;
+  public static final int BUS_ADJACENCY_FIELD_NUMBER = 5;
+  private int busAdjacency_;
   /**
-   * <pre>
-   * Platform-specific data about device that may be useful
-   * for supporting efficient data transfers.
-   * </pre>
-   *
-   * <code>optional .tensorflow.DeviceLocality locality = 5;</code>
+   * <code>optional .tensorflow.BusAdjacency bus_adjacency = 5;</code>
    */
-  public boolean hasLocality() {
-    return locality_ != null;
+  public int getBusAdjacencyValue() {
+    return busAdjacency_;
   }
   /**
-   * <pre>
-   * Platform-specific data about device that may be useful
-   * for supporting efficient data transfers.
-   * </pre>
-   *
-   * <code>optional .tensorflow.DeviceLocality locality = 5;</code>
+   * <code>optional .tensorflow.BusAdjacency bus_adjacency = 5;</code>
    */
-  public org.tensorflow.framework.DeviceLocality getLocality() {
-    return locality_ == null ? org.tensorflow.framework.DeviceLocality.getDefaultInstance() : locality_;
-  }
-  /**
-   * <pre>
-   * Platform-specific data about device that may be useful
-   * for supporting efficient data transfers.
-   * </pre>
-   *
-   * <code>optional .tensorflow.DeviceLocality locality = 5;</code>
-   */
-  public org.tensorflow.framework.DeviceLocalityOrBuilder getLocalityOrBuilder() {
-    return getLocality();
+  public BusAdjacency getBusAdjacency() {
+    BusAdjacency result = BusAdjacency.valueOf(busAdjacency_);
+    return result == null ? BusAdjacency.UNRECOGNIZED : result;
   }
 
   public static final int INCARNATION_FIELD_NUMBER = 6;
@@ -321,8 +295,8 @@ public  final class DeviceAttributes extends
     if (memoryLimit_ != 0L) {
       output.writeInt64(4, memoryLimit_);
     }
-    if (locality_ != null) {
-      output.writeMessage(5, getLocality());
+    if (busAdjacency_ != BusAdjacency.BUS_0.getNumber()) {
+      output.writeEnum(5, busAdjacency_);
     }
     if (incarnation_ != 0L) {
       output.writeFixed64(6, incarnation_);
@@ -347,9 +321,9 @@ public  final class DeviceAttributes extends
       size += com.google.protobuf.CodedOutputStream
         .computeInt64Size(4, memoryLimit_);
     }
-    if (locality_ != null) {
+    if (busAdjacency_ != BusAdjacency.BUS_0.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(5, getLocality());
+        .computeEnumSize(5, busAdjacency_);
     }
     if (incarnation_ != 0L) {
       size += com.google.protobuf.CodedOutputStream
@@ -380,11 +354,7 @@ public  final class DeviceAttributes extends
         .equals(other.getDeviceType());
     result = result && (getMemoryLimit()
         == other.getMemoryLimit());
-    result = result && (hasLocality() == other.hasLocality());
-    if (hasLocality()) {
-      result = result && getLocality()
-          .equals(other.getLocality());
-    }
+    result = result && busAdjacency_ == other.busAdjacency_;
     result = result && (getIncarnation()
         == other.getIncarnation());
     result = result && getPhysicalDeviceDesc()
@@ -406,10 +376,8 @@ public  final class DeviceAttributes extends
     hash = (37 * hash) + MEMORY_LIMIT_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         getMemoryLimit());
-    if (hasLocality()) {
-      hash = (37 * hash) + LOCALITY_FIELD_NUMBER;
-      hash = (53 * hash) + getLocality().hashCode();
-    }
+    hash = (37 * hash) + BUS_ADJACENCY_FIELD_NUMBER;
+    hash = (53 * hash) + busAdjacency_;
     hash = (37 * hash) + INCARNATION_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         getIncarnation());
@@ -539,12 +507,8 @@ public  final class DeviceAttributes extends
 
       memoryLimit_ = 0L;
 
-      if (localityBuilder_ == null) {
-        locality_ = null;
-      } else {
-        locality_ = null;
-        localityBuilder_ = null;
-      }
+      busAdjacency_ = 0;
+
       incarnation_ = 0L;
 
       physicalDeviceDesc_ = "";
@@ -574,11 +538,7 @@ public  final class DeviceAttributes extends
       result.name_ = name_;
       result.deviceType_ = deviceType_;
       result.memoryLimit_ = memoryLimit_;
-      if (localityBuilder_ == null) {
-        result.locality_ = locality_;
-      } else {
-        result.locality_ = localityBuilder_.build();
-      }
+      result.busAdjacency_ = busAdjacency_;
       result.incarnation_ = incarnation_;
       result.physicalDeviceDesc_ = physicalDeviceDesc_;
       onBuilt();
@@ -633,8 +593,8 @@ public  final class DeviceAttributes extends
       if (other.getMemoryLimit() != 0L) {
         setMemoryLimit(other.getMemoryLimit());
       }
-      if (other.hasLocality()) {
-        mergeLocality(other.getLocality());
+      if (other.busAdjacency_ != 0) {
+        setBusAdjacencyValue(other.getBusAdjacencyValue());
       }
       if (other.getIncarnation() != 0L) {
         setIncarnation(other.getIncarnation());
@@ -885,166 +845,48 @@ public  final class DeviceAttributes extends
       return this;
     }
 
-    private org.tensorflow.framework.DeviceLocality locality_ = null;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        org.tensorflow.framework.DeviceLocality, org.tensorflow.framework.DeviceLocality.Builder, org.tensorflow.framework.DeviceLocalityOrBuilder> localityBuilder_;
+    private int busAdjacency_ = 0;
     /**
-     * <pre>
-     * Platform-specific data about device that may be useful
-     * for supporting efficient data transfers.
-     * </pre>
-     *
-     * <code>optional .tensorflow.DeviceLocality locality = 5;</code>
+     * <code>optional .tensorflow.BusAdjacency bus_adjacency = 5;</code>
      */
-    public boolean hasLocality() {
-      return localityBuilder_ != null || locality_ != null;
+    public int getBusAdjacencyValue() {
+      return busAdjacency_;
     }
     /**
-     * <pre>
-     * Platform-specific data about device that may be useful
-     * for supporting efficient data transfers.
-     * </pre>
-     *
-     * <code>optional .tensorflow.DeviceLocality locality = 5;</code>
+     * <code>optional .tensorflow.BusAdjacency bus_adjacency = 5;</code>
      */
-    public org.tensorflow.framework.DeviceLocality getLocality() {
-      if (localityBuilder_ == null) {
-        return locality_ == null ? org.tensorflow.framework.DeviceLocality.getDefaultInstance() : locality_;
-      } else {
-        return localityBuilder_.getMessage();
-      }
-    }
-    /**
-     * <pre>
-     * Platform-specific data about device that may be useful
-     * for supporting efficient data transfers.
-     * </pre>
-     *
-     * <code>optional .tensorflow.DeviceLocality locality = 5;</code>
-     */
-    public Builder setLocality(org.tensorflow.framework.DeviceLocality value) {
-      if (localityBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        locality_ = value;
-        onChanged();
-      } else {
-        localityBuilder_.setMessage(value);
-      }
-
-      return this;
-    }
-    /**
-     * <pre>
-     * Platform-specific data about device that may be useful
-     * for supporting efficient data transfers.
-     * </pre>
-     *
-     * <code>optional .tensorflow.DeviceLocality locality = 5;</code>
-     */
-    public Builder setLocality(
-        org.tensorflow.framework.DeviceLocality.Builder builderForValue) {
-      if (localityBuilder_ == null) {
-        locality_ = builderForValue.build();
-        onChanged();
-      } else {
-        localityBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <pre>
-     * Platform-specific data about device that may be useful
-     * for supporting efficient data transfers.
-     * </pre>
-     *
-     * <code>optional .tensorflow.DeviceLocality locality = 5;</code>
-     */
-    public Builder mergeLocality(org.tensorflow.framework.DeviceLocality value) {
-      if (localityBuilder_ == null) {
-        if (locality_ != null) {
-          locality_ =
-            org.tensorflow.framework.DeviceLocality.newBuilder(locality_).mergeFrom(value).buildPartial();
-        } else {
-          locality_ = value;
-        }
-        onChanged();
-      } else {
-        localityBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <pre>
-     * Platform-specific data about device that may be useful
-     * for supporting efficient data transfers.
-     * </pre>
-     *
-     * <code>optional .tensorflow.DeviceLocality locality = 5;</code>
-     */
-    public Builder clearLocality() {
-      if (localityBuilder_ == null) {
-        locality_ = null;
-        onChanged();
-      } else {
-        locality_ = null;
-        localityBuilder_ = null;
-      }
-
-      return this;
-    }
-    /**
-     * <pre>
-     * Platform-specific data about device that may be useful
-     * for supporting efficient data transfers.
-     * </pre>
-     *
-     * <code>optional .tensorflow.DeviceLocality locality = 5;</code>
-     */
-    public org.tensorflow.framework.DeviceLocality.Builder getLocalityBuilder() {
-      
+    public Builder setBusAdjacencyValue(int value) {
+      busAdjacency_ = value;
       onChanged();
-      return getLocalityFieldBuilder().getBuilder();
+      return this;
     }
     /**
-     * <pre>
-     * Platform-specific data about device that may be useful
-     * for supporting efficient data transfers.
-     * </pre>
-     *
-     * <code>optional .tensorflow.DeviceLocality locality = 5;</code>
+     * <code>optional .tensorflow.BusAdjacency bus_adjacency = 5;</code>
      */
-    public org.tensorflow.framework.DeviceLocalityOrBuilder getLocalityOrBuilder() {
-      if (localityBuilder_ != null) {
-        return localityBuilder_.getMessageOrBuilder();
-      } else {
-        return locality_ == null ?
-            org.tensorflow.framework.DeviceLocality.getDefaultInstance() : locality_;
-      }
+    public BusAdjacency getBusAdjacency() {
+      BusAdjacency result = BusAdjacency.valueOf(busAdjacency_);
+      return result == null ? BusAdjacency.UNRECOGNIZED : result;
     }
     /**
-     * <pre>
-     * Platform-specific data about device that may be useful
-     * for supporting efficient data transfers.
-     * </pre>
-     *
-     * <code>optional .tensorflow.DeviceLocality locality = 5;</code>
+     * <code>optional .tensorflow.BusAdjacency bus_adjacency = 5;</code>
      */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        org.tensorflow.framework.DeviceLocality, org.tensorflow.framework.DeviceLocality.Builder, org.tensorflow.framework.DeviceLocalityOrBuilder> 
-        getLocalityFieldBuilder() {
-      if (localityBuilder_ == null) {
-        localityBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            org.tensorflow.framework.DeviceLocality, org.tensorflow.framework.DeviceLocality.Builder, org.tensorflow.framework.DeviceLocalityOrBuilder>(
-                getLocality(),
-                getParentForChildren(),
-                isClean());
-        locality_ = null;
+    public Builder setBusAdjacency(BusAdjacency value) {
+      if (value == null) {
+        throw new NullPointerException();
       }
-      return localityBuilder_;
+      
+      busAdjacency_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>optional .tensorflow.BusAdjacency bus_adjacency = 5;</code>
+     */
+    public Builder clearBusAdjacency() {
+      
+      busAdjacency_ = 0;
+      onChanged();
+      return this;
     }
 
     private long incarnation_ ;

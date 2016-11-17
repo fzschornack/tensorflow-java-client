@@ -53,32 +53,13 @@ public interface DeviceAttributesOrBuilder extends
   long getMemoryLimit();
 
   /**
-   * <pre>
-   * Platform-specific data about device that may be useful
-   * for supporting efficient data transfers.
-   * </pre>
-   *
-   * <code>optional .tensorflow.DeviceLocality locality = 5;</code>
+   * <code>optional .tensorflow.BusAdjacency bus_adjacency = 5;</code>
    */
-  boolean hasLocality();
+  int getBusAdjacencyValue();
   /**
-   * <pre>
-   * Platform-specific data about device that may be useful
-   * for supporting efficient data transfers.
-   * </pre>
-   *
-   * <code>optional .tensorflow.DeviceLocality locality = 5;</code>
+   * <code>optional .tensorflow.BusAdjacency bus_adjacency = 5;</code>
    */
-  org.tensorflow.framework.DeviceLocality getLocality();
-  /**
-   * <pre>
-   * Platform-specific data about device that may be useful
-   * for supporting efficient data transfers.
-   * </pre>
-   *
-   * <code>optional .tensorflow.DeviceLocality locality = 5;</code>
-   */
-  org.tensorflow.framework.DeviceLocalityOrBuilder getLocalityOrBuilder();
+  BusAdjacency getBusAdjacency();
 
   /**
    * <pre>

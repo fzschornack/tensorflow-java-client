@@ -80,10 +80,9 @@ public  final class NodeDef extends
               mutable_bitField0_ |= 0x00000010;
             }
             com.google.protobuf.MapEntry<String, AttrValue>
-            attr__ = input.readMessage(
+            attr = input.readMessage(
                 AttrDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
-            attr_.getMutableMap().put(
-                attr__.getKey(), attr__.getValue());
+            attr_.getMutableMap().put(attr.getKey(), attr.getValue());
             break;
           }
         }
@@ -511,12 +510,15 @@ public  final class NodeDef extends
     if (!getDeviceBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 4, device_);
     }
-    com.google.protobuf.GeneratedMessageV3
-      .serializeStringMapTo(
-        output,
-        internalGetAttr(),
-        AttrDefaultEntryHolder.defaultEntry,
-        5);
+    for (java.util.Map.Entry<String, AttrValue> entry
+         : internalGetAttr().getMap().entrySet()) {
+      com.google.protobuf.MapEntry<String, AttrValue>
+      attr = AttrDefaultEntryHolder.defaultEntry.newBuilderForType()
+          .setKey(entry.getKey())
+          .setValue(entry.getValue())
+          .build();
+      output.writeMessage(5, attr);
+    }
   }
 
   public int getSerializedSize() {
@@ -544,12 +546,12 @@ public  final class NodeDef extends
     for (java.util.Map.Entry<String, AttrValue> entry
          : internalGetAttr().getMap().entrySet()) {
       com.google.protobuf.MapEntry<String, AttrValue>
-      attr__ = AttrDefaultEntryHolder.defaultEntry.newBuilderForType()
+      attr = AttrDefaultEntryHolder.defaultEntry.newBuilderForType()
           .setKey(entry.getKey())
           .setValue(entry.getValue())
           .build();
       size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, attr__);
+          .computeMessageSize(5, attr);
     }
     memoizedSize = size;
     return size;
