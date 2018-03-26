@@ -26,7 +26,7 @@ To build the `grpc-java` project, first create the file `<project-root>/gradle.p
 Then, inside terminal, navigate to the root directory and execute
 
 ```
-$ ./gradlew_build
+$ ./gradlew build
 ```
 
 The generated libs are inside the folders `<project-root>/<module>/build/libs/`
